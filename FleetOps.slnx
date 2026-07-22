@@ -1,3 +1,17 @@
 <Solution>
-  <Project Path="FleetOps.csproj" />
+  <Folder Name="/docs/">
+    <File Path="docs/00-DomainResearch.md" />
+    <File Path="docs/01-Vision.md" />
+    <File Path="docs/02-Requirements.md" />
+    <File Path="docs/03-SoftwareDesign.md" />
+    <File Path="docs/04-Database.md" />
+    <File Path="docs/05-API.md" />
+    <File Path="docs/06-Architecture.md" />
+    <File Path="docs/07-Roadmap.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="CHANGELOG.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/FleetOps.Api/FleetOps.Api.csproj" />
 </Solution>

@@ -18,13 +18,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Models\" />
-    <Folder Include="Data\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="Application\DTOs\" />
+    <Folder Include="Application\Validators\" />
+    <Folder Include="Domain\Entities\" />
+    <Folder Include="Domain\Enums\" />
+    <Folder Include="Infrastructure\Data\Configurations\" />
+    <Folder Include="Infrastructure\Data\Migrations\" />
+    <Folder Include="Application\Interfaces\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Application\Services\" />
+    <Folder Include="Common\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Infrastructure\Repositories\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 
   <ItemGroup>
