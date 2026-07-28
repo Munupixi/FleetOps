@@ -1,0 +1,21 @@
+﻿using Microsoft.EntityFrameworkCore;
+using FleetOps.Api.Domain.Entities;
+
+namespace FleetOps.Api.Infrastructure.Data;
+
+public class FleetOpsDbContext : DbContext
+{
+    public FleetOpsDbContext(DbContextOptions<FleetOpsDbContext> options) : base(options)
+    {
+
+    }
+
+    public DbSet<Role> Roles => Set<Role>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(FleetOpsDbContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
+    }
+}
