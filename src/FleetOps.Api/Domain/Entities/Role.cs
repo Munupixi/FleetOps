@@ -3,5 +3,8 @@
 public class Role
 {
     public Guid Id { get; init; }
+
     public string Name { get; init; } = string.Empty;
+
+    public ICollection<User> Users { get; set; } = new List<User>();
 }
