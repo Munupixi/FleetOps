@@ -12,6 +12,7 @@ public class FleetOpsDbContext : DbContext
 
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Driver> Drivers => Set<Driver>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -33,6 +33,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(255)
             .IsRequired();
 
+        _ = builder.Property(x => x.Status)
+            .HasDefaultValue(FleetOps.Api.Domain.Enums.UserStatus.Active)
+            .IsRequired();
+
         _ = builder.Property(x => x.RoleId)
             .IsRequired();
 
