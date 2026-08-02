@@ -14,4 +14,7 @@ public class Vehicle
     public int Mileage { get; set; }
     public FuelType FuelType { get; set; }
     public VehicleStatus Status { get; set; } = VehicleStatus.Active;
+
+    public ICollection<VehicleAssignment> VehicleAssignments { get; } = new List<VehicleAssignment>();
+    public ICollection<FuelRecord> FuelRecords { get; } = new List<FuelRecord>();
 }

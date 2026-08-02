@@ -56,6 +56,17 @@ namespace FleetOps.Api.Migrations
                     b.ToTable("Drivers", (string)null);
                 });
 
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Driver", b =>
+                {
+                    b.Navigation("VehicleAssignments");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Vehicle", b =>
+                {
+                    b.Navigation("FuelRecords");
+                    b.Navigation("VehicleAssignments");
+                });
+
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -73,6 +84,33 @@ namespace FleetOps.Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.FuelRecord", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<int>("FuelType").HasColumnType("int");
+                    b.Property<int>("Mileage").HasColumnType("int");
+                    b.Property<decimal>("Price").HasPrecision(10, 2).HasColumnType("decimal(10,2)");
+                    b.Property<DateTime>("RefueledAt").HasColumnType("datetime2");
+                    b.Property<Guid>("VehicleId").HasColumnType("uniqueidentifier");
+                    b.Property<decimal>("Volume").HasPrecision(10, 2).HasColumnType("decimal(10,2)");
+                    b.HasKey("Id");
+                    b.HasIndex("VehicleId", "RefueledAt");
+                    b.ToTable("FuelRecords", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.VehicleAssignment", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<DateTime>("AssignedAt").HasColumnType("datetime2");
+                    b.Property<Guid>("DriverId").HasColumnType("uniqueidentifier");
+                    b.Property<DateTime?>("UnassignedAt").HasColumnType("datetime2");
+                    b.Property<Guid>("VehicleId").HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
+                    b.HasIndex("DriverId");
+                    b.HasIndex("VehicleId", "UnassignedAt").IsUnique().HasFilter("[UnassignedAt] IS NULL");
+                    b.ToTable("VehicleAssignments", (string)null);
                 });
 
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.Driver", b =>
@@ -193,6 +231,35 @@ namespace FleetOps.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.FuelRecord", b =>
+                {
+                    b.HasOne("FleetOps.Api.Domain.Entities.Vehicle", "Vehicle")
+                        .WithMany("FuelRecords")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.VehicleAssignment", b =>
+                {
+                    b.HasOne("FleetOps.Api.Domain.Entities.Driver", "Driver")
+                        .WithMany("VehicleAssignments")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FleetOps.Api.Domain.Entities.Vehicle", "Vehicle")
+                        .WithMany("VehicleAssignments")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Driver");
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.Role", b =>

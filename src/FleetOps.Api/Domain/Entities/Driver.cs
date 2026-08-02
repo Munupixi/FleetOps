@@ -13,4 +13,6 @@ public class Driver
     public DateOnly DriverLicenseExpiryDate { get; set; }
     public DateOnly HireDate { get; set; }
     public DriverStatus Status { get; set; }
+
+    public ICollection<VehicleAssignment> VehicleAssignments { get; } = new List<VehicleAssignment>();
 }

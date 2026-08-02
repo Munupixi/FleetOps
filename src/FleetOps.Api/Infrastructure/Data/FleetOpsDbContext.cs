@@ -14,6 +14,8 @@ public class FleetOpsDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Driver> Drivers => Set<Driver>();
     public DbSet<Vehicle> Vehicles => Set<Vehicle>();
+    public DbSet<VehicleAssignment> VehicleAssignments => Set<VehicleAssignment>();
+    public DbSet<FuelRecord> FuelRecords => Set<FuelRecord>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
