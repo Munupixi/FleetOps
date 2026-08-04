@@ -17,6 +17,7 @@ public class FuelRecordConfiguration : IEntityTypeConfiguration<FuelRecord>
         _ = builder.Property(x => x.Mileage).IsRequired();
         _ = builder.Property(x => x.RefueledAt).IsRequired();
         _ = builder.HasIndex(x => new { x.VehicleId, x.RefueledAt });
-        _ = builder.HasOne(x => x.Vehicle).WithMany(x => x.FuelRecords).HasForeignKey(x => x.VehicleId).OnDelete(DeleteBehavior.NoAction);
+        _ = builder.HasOne(x => x.Vehicle).WithMany(x => x.FuelRecords)
+            .HasForeignKey(x => x.VehicleId).OnDelete(DeleteBehavior.NoAction);
     }
 }

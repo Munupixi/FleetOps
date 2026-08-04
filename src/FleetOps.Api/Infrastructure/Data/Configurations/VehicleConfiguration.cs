@@ -46,6 +46,7 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
 
         _ = builder.Property(x => x.Status)
             .HasDefaultValue(VehicleStatus.Active)
+            .HasSentinel((VehicleStatus)0)
             .IsRequired();
     }
 }

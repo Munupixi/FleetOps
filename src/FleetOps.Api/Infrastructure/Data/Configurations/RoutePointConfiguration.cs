@@ -15,6 +15,7 @@ public class RoutePointConfiguration : IEntityTypeConfiguration<RoutePoint>
         _ = builder.Property(x => x.Address).HasMaxLength(500).IsRequired();
         _ = builder.Property(x => x.OrderNumber).IsRequired();
         _ = builder.HasIndex(x => new { x.RouteId, x.OrderNumber }).IsUnique();
-        _ = builder.HasOne(x => x.Route).WithMany(x => x.RoutePoints).HasForeignKey(x => x.RouteId).OnDelete(DeleteBehavior.NoAction);
+        _ = builder.HasOne(x => x.Route).WithMany(x => x.RoutePoints)
+            .HasForeignKey(x => x.RouteId).OnDelete(DeleteBehavior.NoAction);
     }
 }

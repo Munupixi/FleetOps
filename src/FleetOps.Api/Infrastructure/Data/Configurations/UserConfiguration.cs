@@ -35,6 +35,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         _ = builder.Property(x => x.Status)
             .HasDefaultValue(FleetOps.Api.Domain.Enums.UserStatus.Active)
+            .HasSentinel((FleetOps.Api.Domain.Enums.UserStatus)0)
             .IsRequired();
 
         _ = builder.Property(x => x.RoleId)

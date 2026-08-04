@@ -15,11 +15,13 @@ public class RepairConfiguration : IEntityTypeConfiguration<Repair>
         _ = builder.Property(x => x.RepairTypeId).IsRequired();
         _ = builder.Property(x => x.Description).IsRequired();
         _ = builder.Property(x => x.Cost).HasPrecision(10, 2).IsRequired();
-        _ = builder.Property(x => x.Status).HasDefaultValue(RepairStatus.Registered).IsRequired();
+        _ = builder.Property(x => x.Status).HasDefaultValue(RepairStatus.Registered).HasSentinel((RepairStatus)0).IsRequired();
         _ = builder.Property(x => x.CreatedAt).IsRequired();
         _ = builder.HasIndex(x => new { x.VehicleId, x.CreatedAt });
         _ = builder.HasIndex(x => x.RepairTypeId);
-        _ = builder.HasOne(x => x.Vehicle).WithMany(x => x.Repairs).HasForeignKey(x => x.VehicleId).OnDelete(DeleteBehavior.NoAction);
-        _ = builder.HasOne(x => x.RepairType).WithMany(x => x.Repairs).HasForeignKey(x => x.RepairTypeId).OnDelete(DeleteBehavior.NoAction);
+        _ = builder.HasOne(x => x.Vehicle).WithMany(x => x.Repairs)
+            .HasForeignKey(x => x.VehicleId).OnDelete(DeleteBehavior.NoAction);
+        _ = builder.HasOne(x => x.RepairType).WithMany(x => x.Repairs)
+            .HasForeignKey(x => x.RepairTypeId).OnDelete(DeleteBehavior.NoAction);
     }
 }
