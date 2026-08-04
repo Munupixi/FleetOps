@@ -67,6 +67,57 @@ namespace FleetOps.Api.Migrations
                     b.Navigation("VehicleAssignments");
                 });
 
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.RoutePoint", b =>
+                {
+                    b.HasOne("FleetOps.Api.Domain.Entities.Route", "Route")
+                        .WithMany("RoutePoints")
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.Navigation("Route");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Trip", b =>
+                {
+                    b.HasOne("FleetOps.Api.Domain.Entities.Driver", "Driver")
+                        .WithMany("Trips")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.HasOne("FleetOps.Api.Domain.Entities.Route", "Route")
+                        .WithMany("Trips")
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.HasOne("FleetOps.Api.Domain.Entities.Vehicle", "Vehicle")
+                        .WithMany("Trips")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.Navigation("Driver");
+                    b.Navigation("Route");
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Driver", b =>
+                {
+                    b.Navigation("Trips");
+                    b.Navigation("VehicleAssignments");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Route", b =>
+                {
+                    b.Navigation("RoutePoints");
+                    b.Navigation("Trips");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Vehicle", b =>
+                {
+                    b.Navigation("FuelRecords");
+                    b.Navigation("Trips");
+                    b.Navigation("VehicleAssignments");
+                });
+
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -173,6 +224,44 @@ namespace FleetOps.Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Vehicles", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Route", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<string>("Description").HasMaxLength(500).HasColumnType("nvarchar(500)");
+                    b.Property<string>("Name").IsRequired().HasMaxLength(100).HasColumnType("nvarchar(100)");
+                    b.HasKey("Id");
+                    b.HasIndex("Name").IsUnique();
+                    b.ToTable("Routes", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.RoutePoint", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<string>("Address").IsRequired().HasMaxLength(500).HasColumnType("nvarchar(500)");
+                    b.Property<string>("Name").IsRequired().HasMaxLength(200).HasColumnType("nvarchar(200)");
+                    b.Property<int>("OrderNumber").HasColumnType("int");
+                    b.Property<Guid>("RouteId").HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
+                    b.HasIndex("RouteId", "OrderNumber").IsUnique();
+                    b.ToTable("RoutePoints", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Trip", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("DriverId").HasColumnType("uniqueidentifier");
+                    b.Property<DateTime?>("EndTime").HasColumnType("datetime2");
+                    b.Property<Guid>("RouteId").HasColumnType("uniqueidentifier");
+                    b.Property<DateTime>("StartTime").HasColumnType("datetime2");
+                    b.Property<int>("Status").ValueGeneratedOnAdd().HasColumnType("int").HasDefaultValue(1);
+                    b.Property<Guid>("VehicleId").HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
+                    b.HasIndex("DriverId", "StartTime");
+                    b.HasIndex("RouteId");
+                    b.HasIndex("VehicleId", "StartTime");
+                    b.ToTable("Trips", (string)null);
                 });
 
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.User", b =>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FleetOps.Api.Domain.Entities;
+using RouteEntity = FleetOps.Api.Domain.Entities.Route;
 
 namespace FleetOps.Api.Infrastructure.Data;
 
@@ -16,6 +17,9 @@ public class FleetOpsDbContext : DbContext
     public DbSet<Vehicle> Vehicles => Set<Vehicle>();
     public DbSet<VehicleAssignment> VehicleAssignments => Set<VehicleAssignment>();
     public DbSet<FuelRecord> FuelRecords => Set<FuelRecord>();
+    public DbSet<RouteEntity> Routes => Set<RouteEntity>();
+    public DbSet<RoutePoint> RoutePoints => Set<RoutePoint>();
+    public DbSet<Trip> Trips => Set<Trip>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

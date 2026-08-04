@@ -15,4 +15,5 @@ public class Driver
     public DriverStatus Status { get; set; }
 
     public ICollection<VehicleAssignment> VehicleAssignments { get; } = new List<VehicleAssignment>();
+    public ICollection<Trip> Trips { get; } = new List<Trip>();
 }
