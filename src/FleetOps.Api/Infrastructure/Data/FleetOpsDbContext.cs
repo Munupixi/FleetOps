@@ -17,6 +17,10 @@ public class FleetOpsDbContext : DbContext
     public DbSet<Vehicle> Vehicles => Set<Vehicle>();
     public DbSet<VehicleAssignment> VehicleAssignments => Set<VehicleAssignment>();
     public DbSet<FuelRecord> FuelRecords => Set<FuelRecord>();
+    public DbSet<MaintenanceType> MaintenanceTypes => Set<MaintenanceType>();
+    public DbSet<Maintenance> Maintenances => Set<Maintenance>();
+    public DbSet<RepairType> RepairTypes => Set<RepairType>();
+    public DbSet<Repair> Repairs => Set<Repair>();
     public DbSet<RouteEntity> Routes => Set<RouteEntity>();
     public DbSet<RoutePoint> RoutePoints => Set<RoutePoint>();
     public DbSet<Trip> Trips => Set<Trip>();

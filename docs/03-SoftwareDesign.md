@@ -3,7 +3,7 @@
 | Поле | Значение |
 |:------|:---------|
 | **Проект** | FleetOps |
-| **Версия документа** | 1.0.6 |
+| **Версия документа** | 1.0.7 |
 | **Дата создания** | 2026-07-16 |
 | **Дата изменения** | 2026-08-04 |
 
@@ -109,8 +109,10 @@ FleetOps представляет собой серверное приложен
 | **Driver** | **Trip** | один ко многим |
 | **Vehicle** | **Trip** | один ко многим |
 | **Vehicle** | **FuelRecord** | один ко многим |
+| **MaintenanceType** | **Maintenance** | один ко многим |
 | **Vehicle** | **Maintenance** | один ко многим |
 | **ServiceStation** | **Maintenance** | один ко многим |
+| **RepairType** | **Repair** | один ко многим |
 | **Vehicle** | **Repair** | один ко многим |
 | **ServiceStation** | **Repair** | один ко многим |
 | **Driver** | **Document** | один ко многим |
@@ -206,6 +208,8 @@ FleetOps представляет собой серверное приложен
 | **TripStatus** | `InProgress` | Рейс выполняется. |
 | **TripStatus** | `Completed` | Рейс успешно завершен. |
 | **TripStatus** | `Cancelled` | Рейс отменен. |
+| **MaintenanceStatus** | `Planned`, `InProgress`, `Completed`, `Cancelled` | Состояние технического обслуживания. |
+| **RepairStatus** | `Registered`, `InProgress`, `Completed`, `Cancelled` | Состояние ремонта. |
 
 ---
 

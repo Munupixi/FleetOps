@@ -114,6 +114,8 @@ namespace FleetOps.Api.Migrations
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.Vehicle", b =>
                 {
                     b.Navigation("FuelRecords");
+                    b.Navigation("Maintenances");
+                    b.Navigation("Repairs");
                     b.Navigation("Trips");
                     b.Navigation("VehicleAssignments");
                 });
@@ -264,6 +266,53 @@ namespace FleetOps.Api.Migrations
                     b.ToTable("Trips", (string)null);
                 });
 
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.MaintenanceType", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name").IsRequired().HasMaxLength(100).HasColumnType("nvarchar(100)");
+                    b.HasKey("Id");
+                    b.HasIndex("Name").IsUnique();
+                    b.ToTable("MaintenanceTypes", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Maintenance", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<DateOnly?>("CompletedDate").HasColumnType("date");
+                    b.Property<Guid>("MaintenanceTypeId").HasColumnType("uniqueidentifier");
+                    b.Property<DateOnly>("PlannedDate").HasColumnType("date");
+                    b.Property<int>("Status").ValueGeneratedOnAdd().HasColumnType("int").HasDefaultValue(1);
+                    b.Property<Guid>("VehicleId").HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
+                    b.HasIndex("MaintenanceTypeId");
+                    b.HasIndex("VehicleId", "PlannedDate");
+                    b.ToTable("Maintenances", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.RepairType", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name").IsRequired().HasMaxLength(100).HasColumnType("nvarchar(100)");
+                    b.HasKey("Id");
+                    b.HasIndex("Name").IsUnique();
+                    b.ToTable("RepairTypes", (string)null);
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Repair", b =>
+                {
+                    b.Property<Guid>("Id").ValueGeneratedOnAdd().HasColumnType("uniqueidentifier");
+                    b.Property<decimal>("Cost").HasPrecision(10, 2).HasColumnType("decimal(10,2)");
+                    b.Property<DateTime>("CreatedAt").HasColumnType("datetime2");
+                    b.Property<string>("Description").IsRequired().HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("RepairTypeId").HasColumnType("uniqueidentifier");
+                    b.Property<int>("Status").ValueGeneratedOnAdd().HasColumnType("int").HasDefaultValue(1);
+                    b.Property<Guid>("VehicleId").HasColumnType("uniqueidentifier");
+                    b.HasKey("Id");
+                    b.HasIndex("RepairTypeId");
+                    b.HasIndex("VehicleId", "CreatedAt");
+                    b.ToTable("Repairs", (string)null);
+                });
+
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -349,6 +398,48 @@ namespace FleetOps.Api.Migrations
 
                     b.Navigation("Driver");
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Maintenance", b =>
+                {
+                    b.HasOne("FleetOps.Api.Domain.Entities.MaintenanceType", "MaintenanceType")
+                        .WithMany("Maintenances")
+                        .HasForeignKey("MaintenanceTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.HasOne("FleetOps.Api.Domain.Entities.Vehicle", "Vehicle")
+                        .WithMany("Maintenances")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.Navigation("MaintenanceType");
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.Repair", b =>
+                {
+                    b.HasOne("FleetOps.Api.Domain.Entities.RepairType", "RepairType")
+                        .WithMany("Repairs")
+                        .HasForeignKey("RepairTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.HasOne("FleetOps.Api.Domain.Entities.Vehicle", "Vehicle")
+                        .WithMany("Repairs")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                    b.Navigation("RepairType");
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.MaintenanceType", b =>
+                {
+                    b.Navigation("Maintenances");
+                });
+
+            modelBuilder.Entity("FleetOps.Api.Domain.Entities.RepairType", b =>
+                {
+                    b.Navigation("Repairs");
                 });
 
             modelBuilder.Entity("FleetOps.Api.Domain.Entities.Role", b =>

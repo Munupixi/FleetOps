@@ -17,5 +17,7 @@ public class Vehicle
 
     public ICollection<VehicleAssignment> VehicleAssignments { get; } = new List<VehicleAssignment>();
     public ICollection<FuelRecord> FuelRecords { get; } = new List<FuelRecord>();
+    public ICollection<Maintenance> Maintenances { get; } = new List<Maintenance>();
+    public ICollection<Repair> Repairs { get; } = new List<Repair>();
     public ICollection<Trip> Trips { get; } = new List<Trip>();
 }
