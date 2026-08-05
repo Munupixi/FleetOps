@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\Data\Migrations\**" />
+    <Content Remove="Infrastructure\Data\Migrations\**" />
+    <EmbeddedResource Remove="Infrastructure\Data\Migrations\**" />
+    <None Remove="Infrastructure\Data\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
@@ -31,7 +38,6 @@
     <Folder Include="Application\DTOs\" />
     <Folder Include="Application\Validators\" />
     <Folder Include="Domain\Enums\" />
-    <Folder Include="Infrastructure\Data\Migrations\" />
     <Folder Include="Application\Interfaces\" />
     <Folder Include="Controllers\" />
     <Folder Include="Application\Services\" />
