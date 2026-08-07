@@ -1,4 +1,9 @@
+using FleetOps.Api.Application.DTOs.Vehicles;
+using FleetOps.Api.Application.Interfaces;
+using FleetOps.Api.Application.Services;
+using FleetOps.Api.Application.Validators.Vehicles;
 using FleetOps.Api.Infrastructure.Data;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -8,6 +13,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IValidator<CreateVehicleRequest>, CreateVehicleRequestValidator>();
+
+builder.Services.AddScoped<IVehicleService, VehicleService>();
 
 builder.Services.AddDbContext<FleetOpsDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));

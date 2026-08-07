@@ -1,0 +1,43 @@
+@host = https://localhost:7226
+
+### Create vehicle successfully
+POST {{host}}/api/vehicles
+Content-Type: application/json
+
+{
+  "plateNumber": "А123АА",
+  "vin": "WVWZZZ1JZXW000001",
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "year": 2020,
+  "mileage": 85000,
+  "fuelType": 2
+}
+
+### Validation error: VIN must contain exactly 17 characters
+POST {{host}}/api/vehicles
+Content-Type: application/json
+
+{
+  "plateNumber": "В456ВВ",
+  "vin": "123",
+  "brand": "Toyota",
+  "model": "Camry",
+  "year": 2022,
+  "mileage": 30000,
+  "fuelType": 1
+}
+
+### Conflict: send after the first request to check duplicate handling
+POST {{host}}/api/vehicles
+Content-Type: application/json
+
+{
+  "plateNumber": "А123АА",
+  "vin": "WVWZZZ1JZXW000001",
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "year": 2020,
+  "mileage": 85000,
+  "fuelType": 2
+}

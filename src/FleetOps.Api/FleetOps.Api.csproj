@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
@@ -35,12 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\DTOs\" />
-    <Folder Include="Application\Validators\" />
     <Folder Include="Domain\Enums\" />
-    <Folder Include="Application\Interfaces\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Application\Services\" />
     <Folder Include="Common\" />
     <Folder Include="Extensions\" />
     <Folder Include="Infrastructure\Repositories\" />
